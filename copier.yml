@@ -1,7 +1,16 @@
 # Settings
 _min_copier_version: "7.0"
+_subdirectory: aoc_template
 _tasks:
-  - "python download_input.py {{year}} {{day}}"
+  - [
+      "python3",
+      "{{ _copier_conf.src_path }}/download_prompt.py",
+      "-y",
+      "{{year}}",
+      "-d",
+      "{{day}}",
+    ]
+# - "python3 download_input.py {{year}} {{day}}"
 
 # Questions
 year:
@@ -18,7 +27,7 @@ year:
     - "2015"
 
 day:
-  type: str
+  type: int
   choices:
     - 1
     - 2
@@ -46,10 +55,10 @@ day:
     - 24
     - 25
 
+puzzle_dir:
+  type: int
+  default: "{{ day }}"
+
 puzzle_name:
   type: str
   default: ""
-
-puzzle_dir:
-  type: str
-  default: "{{day|string}}"
