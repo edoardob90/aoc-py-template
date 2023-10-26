@@ -16,7 +16,7 @@ from copier import run_copy
     "--output",
     "-o",
     type=click.Path(file_okay=False, dir_okay=True),
-    default=".",
+    default="output/",
     help="Output base path",
 )
 def entry_point(year: int, day: int, year_dir: bool, output: str) -> None:
