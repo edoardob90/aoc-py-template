@@ -1,0 +1,33 @@
+name: "Advent of Code Template"
+
+description: "Create a Python template for an Advent of Code puzzle"
+
+inputs:
+  aoc_session_token:
+    description: "Destination filename"
+    required: true
+  year:
+    description: "Calendar year of the event"
+    required: false
+  day:
+    description: "Puzzle day"
+    required: false
+  year_dir:
+    description: "Whether to create a 'year' subdirectory"
+    required: false
+    default: "--no-year-dir"
+  output:
+    description: "Destination folder"
+    required: false
+    default: "--output output/"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  env:
+    AOC_SESSION_TOKEN: ${{ inputs.aoc_session_token }}
+  args:
+    - ${{ inputs.year }}
+    - ${{ inputs.day }}
+    - ${{ inputs.year_dir }}
+    - ${{ inputs.output }}

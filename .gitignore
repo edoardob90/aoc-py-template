@@ -1,3 +1,4 @@
 .venv
 Pipfile*
-requirements.txt
+__pycache__
+.DS_Store

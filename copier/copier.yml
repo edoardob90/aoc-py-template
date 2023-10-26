@@ -1,16 +1,16 @@
 # Settings
-_min_copier_version: "7.0"
+_min_copier_version: "8.0"
 _subdirectory: aoc_template
+_exclude:
+  - .DS_Store
 _tasks:
   - [
       "python3",
-      "{{ _copier_conf.src_path }}/download_prompt.py",
-      "-y",
+      "{{ _copier_conf.src_path }}/download.py",
       "{{year}}",
-      "-d",
       "{{day}}",
+      "{% if not year_dir %}--no-year-dir{% else %}--year-dir{% endif %}",
     ]
-# - "python3 download_input.py {{year}} {{day}}"
 
 # Questions
 year:
@@ -55,9 +55,9 @@ day:
     - 24
     - 25
 
-puzzle_dir:
-  type: int
-  default: "{{ day }}"
+year_dir:
+  type: bool
+  default: false
 
 puzzle_name:
   type: str

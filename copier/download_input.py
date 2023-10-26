@@ -5,7 +5,7 @@ Otherwise, does nothing.
 """
 
 # Standard library imports
-import pathlib
+import pathlib as pl
 import sys
 
 # Third party imports
@@ -13,22 +13,28 @@ try:
     from aocd.models import Puzzle
 except ImportError as err:
     print("Install 'advent-of-code-data' with pip to autodownload input files")
-    raise SystemExit() from err
+    raise SystemExit from err
 
 
-def download(year, day):
+def download(year: int, day: int, path: pl.Path | str | None = None) -> None:
     """Get input and write it to input.txt inside the puzzle folder"""
     puzzle = Puzzle(year=year, day=day)
 
-    # Download input
-    path = pathlib.Path(__file__).parent / f"{year}/{day}"
+    if not path:
+        path = pl.Path(__file__).parent / f"{year}/{day}"
+
+    if isinstance(path, str):
+        path = pl.Path(path)
+
     path.mkdir(parents=True, exist_ok=True)
     input_file = path / "input.txt"
     input_file.write_text(puzzle.input_data)
 
     # Download example data, if any
     example_file = path / "example_data.txt"
-    example_file.write_text(puzzle.example_data)
+    examples = puzzle._get_examples()
+    if examples:
+        example_file.write_text("\n".join(example.input_data for example in examples))
 
 
 if __name__ == "__main__":
