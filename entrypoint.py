@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import click
 
 from copier import run_copy

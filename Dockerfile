@@ -11,8 +11,8 @@ RUN cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
 RUN apk add --no-cache pandoc
 
 # Set the working directory
-WORKDIR /app
-RUN mkdir -p /app/output
+WORKDIR /
+RUN mkdir -p ./output
 
 # Install Python dependencies
 COPY requirements.txt .
@@ -24,4 +24,4 @@ COPY copier/ ./template/
 COPY entrypoint.py .
 
 # Set the entrypoint command
-ENTRYPOINT ["python3", "entrypoint.py"]
+ENTRYPOINT ["/entrypoint.py"]
