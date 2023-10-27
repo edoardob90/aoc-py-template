@@ -24,4 +24,4 @@ COPY copier/ template/
 COPY entrypoint.py .
 
 # Set the entrypoint command
-ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/app/entrypoint.py"]
