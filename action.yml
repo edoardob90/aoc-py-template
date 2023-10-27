@@ -4,7 +4,7 @@ description: "Create a Python template for an Advent of Code puzzle"
 
 inputs:
   aoc_session_token:
-    description: "Destination filename"
+    description: "Session token (cookie) for adventofcode.com"
     required: true
   year:
     description: "Calendar year of the event"
@@ -15,11 +15,9 @@ inputs:
   year_dir:
     description: "Whether to create a 'year' subdirectory"
     required: false
-    default: "--no-year-dir"
   output:
     description: "Destination folder"
     required: false
-    default: "--output output/"
 
 runs:
   using: "docker"

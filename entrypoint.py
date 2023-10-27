@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
+from datetime import datetime
+
 import click
 
 from copier import run_copy
 
 
 @click.command()
-@click.argument("year", type=int, default=2020)
+@click.argument("year", type=int, default=datetime.now().year)
 @click.argument("day", type=int, default=1)
 @click.option(
     "--year-dir/--no-year-dir",
