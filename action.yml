@@ -12,10 +12,6 @@ inputs:
   day:
     description: "Puzzle day"
     required: false
-  year_dir:
-    description: "Whether to create a 'year' subdirectory"
-    required: false
-    default: "--no-year-dir"
 
 runs:
   using: "docker"
@@ -25,4 +21,3 @@ runs:
   args:
     - ${{ inputs.year }}
     - ${{ inputs.day }}
-    - ${{ inputs.year_dir }}
