@@ -16,15 +16,24 @@ from copier import run_copy
     help="Whether the output path will contain the year folder",
 )
 @click.option(
+    "--src",
+    "-s",
+    type=click.Path(file_okay=False, dir_okay=True),
+    default="template/",
+    show_default=True,
+    help="Source path",
+)
+@click.option(
     "--output",
     "-o",
     type=click.Path(file_okay=False, dir_okay=True),
     default="output/",
-    help="Output base path",
+    show_default=True,
+    help="Destination path",
 )
-def entry_point(year: int, day: int, year_dir: bool, output: str) -> None:
+def entry_point(year: int, day: int, year_dir: bool, src: str, output: str) -> None:
     run_copy(
-        src_path="template",
+        src_path=src,
         dst_path=output,
         data={"year": year, "day": day, "year_dir": year_dir, "puzzle_name": ""},
         unsafe=True,

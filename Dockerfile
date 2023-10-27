@@ -12,14 +12,14 @@ RUN apk add --no-cache pandoc
 
 # Set the working directory
 WORKDIR /
-RUN mkdir -p ./output
+RUN mkdir -p output
 
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copy template files
-COPY copier/ ./template/
+COPY copier/ template/
 
 COPY entrypoint.py .
 
