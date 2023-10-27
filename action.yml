@@ -15,11 +15,15 @@ inputs:
   source:
     description: "Source template directory"
     required: false
-    default: "template/"
+    default: "/app/template/"
   output:
     description: "Output directory"
     required: false
-    default: "output/"
+    default: "."
+  year_dir:
+    description: "Create a directory for the year"
+    required: false
+    default: false
 
 runs:
   using: "docker"
@@ -29,7 +33,6 @@ runs:
   args:
     - ${{ inputs.year }}
     - ${{ inputs.day }}
-    - "--src"
+    - ${{ inputs.year_dir }}
     - ${{ inputs.source }}
-    - "--output"
     - ${{ inputs.output }}
