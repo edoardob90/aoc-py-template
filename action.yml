@@ -12,6 +12,14 @@ inputs:
   day:
     description: "Puzzle day"
     required: false
+  source:
+    description: "Source template directory"
+    required: false
+    default: "template/"
+  output:
+    description: "Output directory"
+    required: false
+    default: "output/"
 
 runs:
   using: "docker"
@@ -21,3 +29,7 @@ runs:
   args:
     - ${{ inputs.year }}
     - ${{ inputs.day }}
+    - "--src"
+    - ${{ inputs.source }}
+    - "--output"
+    - ${{ inputs.output }}

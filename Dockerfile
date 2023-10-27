@@ -11,7 +11,7 @@ RUN cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
 RUN apk add --no-cache pandoc
 
 # Set the working directory
-WORKDIR /
+WORKDIR /app
 RUN mkdir -p output
 
 # Install Python dependencies
