@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import typing as t
 from datetime import datetime
 
 import click
@@ -22,7 +23,7 @@ def fetch_puzzle_name(year: int, day: int) -> str:
     return ""
 
 
-@click.command()
+@click.command(context_settings=dict(ignore_unknown_options=True))
 @click.argument("year", type=int, default=datetime.now().year)
 @click.argument("day", type=int, default=1)
 @click.argument(
@@ -40,19 +41,16 @@ def fetch_puzzle_name(year: int, day: int) -> str:
     type=click.Path(file_okay=False, dir_okay=True),
     default=".",
 )
-@click.option(
-    "--dry-run",
-    "-n",
-    is_flag=True,
-    default=False,
-    help="Do not write any file, just show what would be done",
-)
+@click.argument("extra_args", nargs=-1, type=click.UNPROCESSED)
 def entry_point(
-    year: int, day: int, year_dir: bool, src: str, output: str, dry_run: bool
+    year: int,
+    day: int,
+    year_dir: bool,
+    src: str,
+    output: str,
+    extra_args: t.Tuple[str],
 ) -> None:
-    puzzle_name = fetch_puzzle_name(year, day)
-
-    if dry_run:
+    if "-n" in extra_args or "--dry-run" in extra_args:
         return print(vars())
 
     run_copy(
@@ -62,7 +60,7 @@ def entry_point(
             "year": year,
             "day": day,
             "year_dir": year_dir,
-            "puzzle_name": puzzle_name,
+            "puzzle_name": fetch_puzzle_name(year, day),
         },
         unsafe=True,
     )

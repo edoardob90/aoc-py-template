@@ -24,6 +24,10 @@ inputs:
     description: "Create a directory for the year"
     required: false
     default: false
+  extra_args:
+    description: "Extra arguments to pass to the script"
+    required: false
+    default: ""
 
 runs:
   using: "docker"
@@ -36,3 +40,4 @@ runs:
     - ${{ inputs.year_dir }}
     - ${{ inputs.source }}
     - ${{ inputs.output }}
+    - ${{ inputs.extra_args }}
