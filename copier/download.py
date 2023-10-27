@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import pathlib as pl
+import re
 import sys
 
 import click
@@ -41,9 +42,16 @@ def download(year: int, day: int, year_dir: bool) -> None:
         str(body), "gfm", format="html", extra_args=["--wrap=none"]
     )
 
+    # Fix external links to other AoC days
+    markdown = re.sub(
+        r"\[(.*)\]\(/([^)]*)\)", r"[\1](https://adventofcode.com/\2)", markdown
+    )
+
     output_dir = pl.Path.cwd() / (f"{day:02d}" if not year_dir else f"{year}/{day:02d}")
+
     output_dir.mkdir(parents=True, exist_ok=True)
-    with (output_dir / "prompt.txt").open("w", encoding="utf-8") as f:
+
+    with (output_dir / "readme.md").open("w", encoding="utf-8") as f:
         f.write(markdown)
 
     # Download input file
