@@ -25,7 +25,7 @@ runs:
   using: "docker"
   image: "Dockerfile"
   env:
-    AOC_SESSION_TOKEN: ${{ inputs.aoc_session_token }}
+    AOC_SESSION: ${{ inputs.aoc_session_token }}
   args:
     - ${{ inputs.year }}
     - ${{ inputs.day }}
