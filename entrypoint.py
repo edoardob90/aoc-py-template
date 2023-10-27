@@ -40,7 +40,21 @@ def fetch_puzzle_name(year: int, day: int) -> str:
     type=click.Path(file_okay=False, dir_okay=True),
     default=".",
 )
-def entry_point(year: int, day: int, year_dir: bool, src: str, output: str) -> None:
+@click.option(
+    "--dry-run",
+    "-n",
+    is_flag=True,
+    default=False,
+    help="Do not write any file, just show what would be done",
+)
+def entry_point(
+    year: int, day: int, year_dir: bool, src: str, output: str, dry_run: bool
+) -> None:
+    puzzle_name = fetch_puzzle_name(year, day)
+
+    if dry_run:
+        return print(vars())
+
     run_copy(
         src_path=src,
         dst_path=output,
@@ -48,7 +62,7 @@ def entry_point(year: int, day: int, year_dir: bool, src: str, output: str) -> N
             "year": year,
             "day": day,
             "year_dir": year_dir,
-            "puzzle_name": fetch_puzzle_name(year, day),
+            "puzzle_name": puzzle_name,
         },
         unsafe=True,
     )
