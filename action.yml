@@ -15,9 +15,11 @@ inputs:
   year_dir:
     description: "Whether to create a 'year' subdirectory"
     required: false
+    default: "--no-year-dir"
   output:
     description: "Destination folder"
     required: false
+    default: "output/"
 
 runs:
   using: "docker"
@@ -28,4 +30,5 @@ runs:
     - ${{ inputs.year }}
     - ${{ inputs.day }}
     - ${{ inputs.year_dir }}
+    - "--output"
     - ${{ inputs.output }}
