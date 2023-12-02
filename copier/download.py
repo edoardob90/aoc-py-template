@@ -12,7 +12,7 @@ from requests.exceptions import HTTPError
 try:
     from download_input import download as download_input
 except SystemExit:
-    download_input = False
+    download_input = None
 
 
 @click.command()
