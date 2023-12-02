@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import pathlib as pl
 import typing as t
 from datetime import datetime
 
@@ -21,6 +22,18 @@ def fetch_puzzle_name(year: int, day: int) -> str:
         if title := soup.find("h2"):
             return title.text.replace("---", "").split(":", 1)[1].strip()
     return ""
+
+
+def update_readme(year: int, day: int, output: str) -> None:
+    outpath = pl.Path(output).expanduser().resolve()
+
+    if (readme := outpath / "README.md").exists():
+        lines = readme.read_text().splitlines()
+
+        if title := fetch_puzzle_name(year, day):
+            new_line = f"{day:02d} - [{title}](https://adventofcode.com/{year}/day/{day}) | ⭕ ⭕ | - |  \n"
+            lines.append(new_line)
+            readme.write_text("\n".join(lines))
 
 
 @click.command(context_settings=dict(ignore_unknown_options=True))
@@ -50,9 +63,11 @@ def entry_point(
     output: str,
     extra_args: t.Tuple[str],
 ) -> None:
+    # Dry run
     if "-n" in extra_args or "--dry-run" in extra_args:
         return print(vars())
 
+    # Copy template
     run_copy(
         src_path=src,
         dst_path=output,
@@ -64,6 +79,9 @@ def entry_point(
         },
         unsafe=True,
     )
+
+    # Update README.md
+    update_readme(year, day, output)
 
 
 if __name__ == "__main__":
