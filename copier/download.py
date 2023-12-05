@@ -6,6 +6,7 @@ import sys
 import click
 import pypandoc
 import requests
+from aocd.exceptions import DeadTokenError
 from bs4 import BeautifulSoup
 from requests.exceptions import HTTPError
 
@@ -56,7 +57,13 @@ def download(year: int, day: int, year_dir: bool) -> None:
 
     # Download input file
     if callable(download_input):
-        download_input(year, day, output_dir)
+        try:
+            download_input(year, day, output_dir)
+        except DeadTokenError as err:
+            print(
+                f"Downloading input for year {year}, day {day} failed because auth is expired: {err}",
+                file=sys.stderr,
+            )
 
 
 if __name__ == "__main__":

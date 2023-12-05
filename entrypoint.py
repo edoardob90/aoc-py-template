@@ -31,7 +31,7 @@ def update_readme(year: int, day: int, output: str) -> None:
         lines = readme.read_text().splitlines()
 
         if title := fetch_puzzle_name(year, day):
-            new_line = f"{day:02d} - [{title}](https://adventofcode.com/{year}/day/{day}) | ⭕ ⭕ | - |  \n"
+            new_line = f"{day:02d} - [{title}](https://adventofcode.com/{year}/day/{day}) | ⭕ ⭕ | - |\n"
             lines.append(new_line)
             readme.write_text("\n".join(lines))
 
