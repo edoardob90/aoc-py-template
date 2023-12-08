@@ -1,31 +1,44 @@
-FROM alpine:latest
+# Use Debian slim as the base image
+FROM debian:slim
 
 # Install Python 3 and required dependencies
-RUN apk add --no-cache bash git python3 python3-dev py3-pip build-base tzdata
+RUN apt-get update && apt-get install -y \
+    bash \
+    git \
+    python3 \
+    python3-dev \
+    python3-pip \
+    python3-venv \
+    build-essential \
+    tzdata \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set the timezone
 RUN cp /usr/share/zoneinfo/America/New_York /etc/localtime && \
     echo "America/New_York" > /etc/timezone
 
 # Install Pandoc
-RUN apk add --no-cache pandoc
+RUN apt-get update && apt-get install -y pandoc && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory
 WORKDIR /app
 RUN mkdir -p output
 
-# Create a Python virtual env
-ENV VIRTUAL_ENV=/app/venv
-RUN pip3 install virtualenv && python3 -m venv $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-# Install Python dependencies
+# Copy the Python requirements file
 COPY requirements.txt .
-RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Copy files
+# Create a virtual environment and activate it
+ENV VENV_PATH="/app/venv"
+RUN python3 -m virtualenv $VENV_PATH
+ENV PATH="$VENV_PATH/bin:$PATH"
+
+# Install Python dependencies inside the virtual environment
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy template files
 COPY copier/ template/
+
 COPY entrypoint.py .
 
 # Set the entrypoint command
-ENTRYPOINT ["/app/entrypoint.py"]
+ENTRYPOINT ["/app/venv/bin/python", "/app/entrypoint.py"]
