@@ -1,5 +1,5 @@
 # Use Debian slim as the base image
-FROM debian:slim
+FROM debian:stable-slim
 
 # Install Python 3 and required dependencies
 RUN apt-get update && apt-get install -y \
