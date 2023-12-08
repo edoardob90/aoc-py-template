@@ -29,7 +29,7 @@ COPY requirements.txt .
 
 # Create a virtual environment and activate it
 ENV VENV_PATH="/app/venv"
-RUN python3 -m virtualenv $VENV_PATH
+RUN python3 -m venv $VENV_PATH
 ENV PATH="$VENV_PATH/bin:$PATH"
 
 # Install Python dependencies inside the virtual environment
