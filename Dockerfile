@@ -14,13 +14,17 @@ RUN apk add --no-cache pandoc
 WORKDIR /app
 RUN mkdir -p output
 
+# Create a Python virtual env
+ENV VIRTUAL_ENV=/app/venv
+RUN pip3 install virtualenv && python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 # Install Python dependencies
 COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Copy template files
+# Copy files
 COPY copier/ template/
-
 COPY entrypoint.py .
 
 # Set the entrypoint command
